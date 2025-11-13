@@ -38,6 +38,12 @@
 
       <h2 class="text-center mb-4">🐶 Dog Breed Identifier</h2>
 
+      {% if error %}
+        <div class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
+      {% endif %}
+
       <form method="post" action="{{ url_for('predict') }}" enctype="multipart/form-data" onsubmit="return validateFile();">
 
         <div class="mb-3">

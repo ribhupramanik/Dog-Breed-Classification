@@ -58,10 +58,10 @@ def allowed_file(filename):
 def get_pred_label(prediction_probabilities):
     return CLASS_NAMES[np.argmax(prediction_probabilities)]
 
-def is_real_jpeg(filepath):
+def is_valid_image(filepath):
     try:
         img = Image.open(filepath)
-        return img.format == "JPEG"  # True only if ACTUAL JPEG
+        return img.format in ["JPEG", "JPG", "PNG"]   # True only if ACTUAL JPEG
     except:
         return False
 
@@ -88,6 +88,10 @@ def predict():
         filename = f"{int(time.time())}_{filename}"
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
+        # 🚨 Check if the uploaded file is a REAL JPEG (not fake renamed)
+        if not is_valid_image(filepath):
+            os.remove(filepath)  # delete fake file
+            return render_template("index.html", error="❌  Only real JPG, JPEG, or PNG images are allowed!")
 
         # ✅ Create test batch using your existing batching function
         data_batch = create_data_batches([filepath], test_data=True)
