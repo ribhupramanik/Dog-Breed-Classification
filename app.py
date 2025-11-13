@@ -10,6 +10,7 @@ import tf_keras as keras
 import pandas as pd  
 import numpy as np
 from utils import create_data_batches
+from PIL import Image
 
 # -----------------------------
 # CONFIGURATION
@@ -56,6 +57,13 @@ def allowed_file(filename):
 
 def get_pred_label(prediction_probabilities):
     return CLASS_NAMES[np.argmax(prediction_probabilities)]
+
+def is_real_jpeg(filepath):
+    try:
+        img = Image.open(filepath)
+        return img.format == "JPEG"  # True only if ACTUAL JPEG
+    except:
+        return False
 
 # -----------------------------
 # ROUTES
