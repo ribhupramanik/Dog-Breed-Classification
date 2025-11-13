@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Prediction Result</title>
+  </head>
+  <body style="font-family:Arial; text-align:center;">
+    <h1>Predicted breeds</h1>
+    <img src="{{ image_url }}" width="300" alt="uploaded image">
+    <h2>Top predictions</h2>
+    <ol>
+      {% for r in results %}
+        <li>{{ r.label }} — {{ r.confidence }}%</li>
+      {% endfor %}
+    </ol>
+    <a href="{{ url_for('index') }}">Try another image</a>
+  </body>
+</html>
